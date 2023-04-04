@@ -1,0 +1,68 @@
+{% extends 'includes/base.html' %}
+{% load static %}
+
+{% block title %}
+{{employee.full_name}}
+{% endblock title %}
+
+{% block content %}
+{% include 'includes/header.html' %}
+<div class="grid-container">
+    <div class="grid-x grid-padding-x"> 
+        <div class="cell large-12"><h2>Detalles de Empleado:</h2></div>    
+        <div class="cell large-4 card" style="width: 300px;">
+            <div class="card-divider">
+                <h4>{{employee.full_name}}</h4>
+            </div>
+            {% if employee.picture %}
+                <img src="{{employee.picture.url}}">
+            {% else %}
+                <img src="{% static 'img/empleado.jpg' %}">
+            {% endif %}            
+        </div>        
+        <div class="callaout grid-x" style="margin-left: 15px;">
+            <label class="cell large-2" style="background-color: gainsboro;"><strong>Departamento:</strong></label>
+            <label class="cell large-10" style="background-color: gainsboro;">{{employee.departament}}</label>
+            <label class="cell large-2"><strong>Trabajo:</strong></label>
+            <label class="cell large-10">{{employee.get_job_display}}</label>
+            <label class="cell large-2" style="background-color: gainsboro;"><strong> Habilidades:</strong></label>            
+            <label class="cell large-10" style="background-color: gainsboro;">
+                {% for sk in object_list %}
+                    <li>{{ sk }}</li>
+                {% endfor %}
+            </label>           
+            
+            <label class="callout cell"><strong>Curriculum Vitae:</strong>{{employee.cv | safe}}</label>
+        </div>        
+        
+        <div class="cell large-12" style= "padding: 20px;">
+            <a href="{% url 'employee:update' employee.id %}" class="success button">Editar</a>
+        </div>
+
+    </div>
+</div>
+{% endblock content %}
+
+
+
+{% comment  %}
+    <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{employee.full_name}}</title>
+</head>
+<body>
+    <h1>Datos de {{employee.first_name}} {{employee.last_name}}</h1>
+    
+    <!-- "get_*_display" muestra la etiqueta asociada con el valor del choice, ej. Administracion para 0 -->
+    <!-- en los html las funciones se llaman sin los "()" -->
+    <h4>Cargo: {{employee.get_job_display}}</h4>
+    <h4>Departamento: {{employee.departament}}</h4>
+
+    <!-- incluye al archivo "employee/employee-skills.html" para mostrar las habilidades -->
+    {% include "employee/employee-skills.html" %}
+</body>
+</html>
+{% endcomment %}
+

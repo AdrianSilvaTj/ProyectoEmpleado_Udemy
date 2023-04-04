@@ -1,0 +1,67 @@
+{% extends 'includes/base.html' %}
+{% load static %}
+
+{% block title %}Lista de Todos los Departamentos{% endblock title %}
+
+{% block content %}
+    {% include 'includes/header.html' %}    
+    <div class="grid-container">
+        <div class="grid-x">
+            <h1 class="cell">Todos los Departamentos</h1>
+
+            <form class="cell grid-x grid-margin-x" method="GET">{% csrf_token %}
+                <div class="cell large-7">
+                    <input type="text" name="kword" id="kword" placeholder="Ingrese departamento a buscar...">
+                </div>
+                <div class="cell large-2">
+                    <button type="submit" class="submit success button">Buscar</button>
+                </div>
+            </form>
+
+            <div class="cell">
+                <table>
+                    <thead>
+                      <tr>
+                        <th width="200">Id</th>
+                        <th>Nombre</th>
+                        <th width="300">Alias</th>                        
+                        <th width="150">Accion</th>
+                      </tr>
+                    </thead>
+                    <tbody><!-- object_list retorna el contexto de la list view -->
+                    {% for dep in object_list %}
+                        <tr>
+                          <td>{{ dep.id }}</td>
+                          <td>{{ dep.name }}</td>
+                          <td>{{ dep.short_name }}</td>
+                          <td><a button class="hollow button warning" href="{% url 'employee:by-area' dep.short_name %}" style="
+                            margin-bottom: 0px;">Ver Empleados</button>
+                        </tr>                      
+                    {% endfor %}
+                    </tbody>
+                  </table>
+            </div>
+            <div class="cell align-center primary button-group hollow no-gaps">
+                <!-- Mostrar Navegacion para la paginacion, 'page_obj' es un objeto que pasa ListView automaticamente que contiene los
+                atributos de la paginacion -->                   
+                {% if page_obj.has_previous %}        
+                    <a class="button" href="?page={{ page_obj.previous_page_number }}"><< Anterior</a>        
+                {% endif %}
+                {% for i in page_obj.paginator.page_range %}
+                    {% if i == page_obj.number %}            
+                        <a class="button" style="background-color: aqua;" href="#">{{ i }}</a>            
+                    {% else %}            
+                        <a class="button" href="?page={{ i }}">{{ i }}</a>            
+                    {% endif %}        
+                {% endfor %}
+                {% if page_obj.has_next %}        
+                    <a class="button" href="?page={{ page_obj.next_page_number }}">Siguiente >></a>        
+                {% endif %}
+                 
+            </div>
+        </div>
+        
+        
+       
+    </div>
+{% endblock content %}

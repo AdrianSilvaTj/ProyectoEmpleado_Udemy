@@ -1,0 +1,70 @@
+{% extends 'includes/base.html' %}
+{% load static %}
+
+{% block title %}
+    Modificar Empleado
+{% endblock title %}
+
+{% block content %}
+{% include 'includes/header.html' %}
+<div class="grid-container">
+    <h1>Modificar Empleado</h1>
+    <div class="cell">
+        <form class="grid-x  grid-padding-x" method="post">{% csrf_token %}            
+            <div class="cell large-6 ">
+                <label>Nombres:
+                    {{form.first_name}}
+                </label>
+            </div>
+            <div class="cell large-6 ">
+                <label>Apellidos:
+                    {{form.last_name}}
+                </label>
+            </div>
+            <div class="cell large-4 ">
+                <label>Departamento:
+                    {{form.departament}}
+                </label>
+            </div>
+            <div class="cell large-4 ">
+                <label>Trabajo:
+                    {{form.job}}
+                </label>
+            </div>
+            <div class="cell large-4 ">
+                <label>Habilidades:
+                    {{form.skills}}
+                </label>
+            </div>
+            <div class="cell large-12">
+                <label>Curriculum Vitae:</label>
+                {{form.cv}}{{form.media}}
+            </div>
+            <div class="cell large-12" style= "padding: 20px;">
+                <button type="submit" class="success button">Actualizar</button>
+            </div>
+
+        </form>
+        
+    </div>        
+</div>
+{% endblock content %}
+        
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modificar Empleado</title>
+</head>
+<body>
+    <h1>Modificar Empleado</h1>
+    <form method="post">{% csrf_token %}
+        {{form.as_p}}
+        <button type="submit">Actualizar</button>
+    </form>
+</body>
+</html> -->
